@@ -9,7 +9,12 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   </React.StrictMode>
 );
 
-if ("serviceWorker" in navigator && import.meta.env.PROD) {
+// Keep the service worker for the website, but not the native Android app.
+if (
+  import.meta.env.MODE !== "capacitor" &&
+  "serviceWorker" in navigator &&
+  import.meta.env.PROD
+) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`).catch((error) => {
       console.error("MePlanner service worker registration failed:", error);
